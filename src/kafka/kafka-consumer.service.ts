@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { KafkaConfigService } from './kafka.config.service';
-import { Consumer } from 'kafkajs';
+import { Consumer, EachMessagePayload } from 'kafkajs';
 
 @Injectable()
 export class KafkaConsumerService {
@@ -14,30 +14,28 @@ export class KafkaConsumerService {
   }
 
   async subscribe(topic: string, callback: (message: any) => Promise<boolean>) {
+    const eachMessage = async (payload: EachMessagePayload) => {
+      const { topic, partition, message } = payload;
+
+      const isOk = await callback(payload);
+
+      if (isOk) {
+        await this.#commitManually({
+          topic,
+          partition,
+          offset: message.offset,
+        });
+      }
+    };
+
     await this.consumer.subscribe({ topic, fromBeginning: true });
     await this.consumer.run({
-      eachMessage: async ({ topic, partition, message }) => {
-        const callbackMessage = {
-          value: message.value.toString(),
-          partition: partition,
-          offset: message.offset,
-        };
-
-        const isOk = await callback(callbackMessage);
-
-        if (isOk) {
-          await this.commitManually({
-            topic,
-            partition,
-            offset: message.offset,
-          });
-        }
-      },
+      eachMessage,
       autoCommit: false,
     });
   }
 
-  private async commitManually({ topic, partition, offset }) {
+  async #commitManually({ topic, partition, offset }) {
     await this.consumer.commitOffsets([{ topic, partition, offset }]);
   }
 

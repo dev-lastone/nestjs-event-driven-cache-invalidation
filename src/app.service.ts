@@ -16,9 +16,10 @@ export class AppService {
 
   async addTopic(topic: string) {
     await this.kafkaConsumerService.subscribe(topic, async (message) => {
-      console.log('@@@@@@@@@@@');
-      console.log('Message:', message);
+      // 메시지 처리 로직
+      console.log(message);
       return true;
+      // TODO 메시지 처리 로직 실패 false
     });
   }
 
