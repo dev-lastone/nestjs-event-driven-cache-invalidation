@@ -14,10 +14,12 @@ export class AppService {
 
   constructor() {
     this.consumer.connect();
-    this.consumer.subscribe({ topics: ['test_a', 'test_b'] });
+    this.consumer.subscribe({ topics: ['test', 'test_a', 'test_b'] });
     this.consumer.run({
       eachMessage: this.consumerCallback,
     });
+
+    this.producer.connect();
   }
 
   async consumerCallback(payload: EachMessagePayload) {
@@ -36,6 +38,13 @@ export class AppService {
     await this.consumer.subscribe({ topic }); // 구독하고
     await this.consumer.run({
       eachMessage: this.consumerCallback,
+    });
+  }
+
+  async sendMessage(topic: string, message: string) {
+    await this.producer.send({
+      topic,
+      messages: [{ value: message }],
     });
   }
 }

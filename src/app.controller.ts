@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AddTopicReqDto } from './app.dts';
+import { AddTopicReqDto, SendMessageReqDto } from './app.dts';
 
 @Controller()
 export class AppController {
@@ -19,6 +19,17 @@ export class AppController {
     } else {
       await this.appService.addSubscriptionTopic(topic);
       return `topic ${topic} added`;
+    }
+  }
+
+  @Post('send-message')
+  async sendMessage(@Body() dto: SendMessageReqDto): Promise<string> {
+    const { topic, message } = dto;
+    if (topic == undefined || message == undefined) {
+      return 'topic or message is undefined';
+    } else {
+      await this.appService.sendMessage(topic, message);
+      return `message sent to ${topic}`;
     }
   }
 }
