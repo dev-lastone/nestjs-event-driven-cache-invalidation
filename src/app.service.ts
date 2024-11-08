@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { KafkaService } from './kafka/kafka.service';
 import { SendMessageReqDto } from './app.dts';
+import { KafkaProducerService } from './kafka/kafka-producer.service';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly kafkaService: KafkaService) {}
+  constructor(
+    private readonly kafkaService: KafkaService,
+    private readonly kafkaProducerService: KafkaProducerService,
+  ) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -15,6 +19,6 @@ export class AppService {
   }
 
   async sendMessage(dto: SendMessageReqDto) {
-    await this.kafkaService.sendMessage(dto.topic, dto.message);
+    await this.kafkaProducerService.sendMessage(dto);
   }
 }
