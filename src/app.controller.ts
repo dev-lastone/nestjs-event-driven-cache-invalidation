@@ -12,24 +12,12 @@ export class AppController {
   }
 
   @Post('add-topic')
-  async addTopic(@Body() dto: AddTopicReqDto): Promise<string> {
-    const { topic } = dto;
-    if (topic == undefined) {
-      return 'topic is undefined';
-    } else {
-      await this.appService.addSubscriptionTopic(topic);
-      return `topic ${topic} added`;
-    }
+  async addTopic(@Body() dto: AddTopicReqDto) {
+    await this.appService.addTopic(dto.topic);
   }
 
   @Post('send-message')
-  async sendMessage(@Body() dto: SendMessageReqDto): Promise<string> {
-    const { topic, message } = dto;
-    if (topic == undefined || message == undefined) {
-      return 'topic or message is undefined';
-    } else {
-      await this.appService.sendMessage(topic, message);
-      return `message sent to ${topic}`;
-    }
+  async sendMessage(@Body() dto: SendMessageReqDto) {
+    await this.appService.sendMessage(dto);
   }
 }
