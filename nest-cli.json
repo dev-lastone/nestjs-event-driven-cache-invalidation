@@ -1,22 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/nestjs-kafka/src",
+  "sourceRoot": "apps/app/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/nestjs-kafka/tsconfig.app.json"
+    "tsConfigPath": "apps/app/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/nestjs-kafka",
+  "root": "apps/app",
   "projects": {
-    "nestjs-kafka": {
+    "app": {
       "type": "application",
-      "root": "apps/nestjs-kafka",
+      "root": "apps/app",
       "entryFile": "main",
-      "sourceRoot": "apps/nestjs-kafka/src",
+      "sourceRoot": "apps/app/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/nestjs-kafka/tsconfig.app.json"
+        "tsConfigPath": "apps/app/tsconfig.app.json"
       }
     },
     "admin": {
