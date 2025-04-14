@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PostMetaReqDto {
+export class PostMetaAdminReqDto {
   @ApiProperty()
   name: string;
 }
