@@ -2,11 +2,14 @@ module.exports = {
   apps: [
     {
       name: 'admin',
-      script: 'node dist/apps/admin/apps/admin/src/main.js',
+      script: './dist/apps/admin/apps/admin/src/main.js',
     },
     {
       name: 'app',
-      script: 'node dist/apps/app/apps/app/src/main.js',
+      script: './dist/apps/app/apps/app/src/main.js',
+      instances: 2,
+      exec_mode: 'cluster',
+      instance_var: 'INSTANCE_ID',
     },
   ],
 };
