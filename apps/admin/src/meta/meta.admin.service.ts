@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PostMetaAdminReqDto } from './meta.admin.dto';
 import { KafkaProducerService } from '@kafka/kafka-producer.service';
+import { KAFKA_TOPICS } from '@kafka/constants';
 
 @Injectable()
 export class MetaAdminService {
-  private readonly TOPIC = 'meta';
   private readonly meta = [];
 
   constructor(private readonly kafkaProducerService: KafkaProducerService) {
@@ -20,7 +20,7 @@ export class MetaAdminService {
 
   async addMeta(dto: PostMetaAdminReqDto) {
     await this.kafkaProducerService.sendMessage({
-      topic: this.TOPIC,
+      topic: KAFKA_TOPICS.META,
       message: JSON.stringify(dto),
     });
   }
