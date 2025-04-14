@@ -1,11 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AddTopicReqDto {
-  @ApiProperty()
-  topic: string;
-}
-
-export class SendMessageReqDto {
+export class SendMessageDto {
   @ApiProperty()
   topic: string;
   @ApiProperty()
