@@ -17,6 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@kafka": [
+        "libs/kafka/src"
+      ],
+      "@kafka/*": [
+        "libs/kafka/src/*"
+      ]
+    }
   }
 }
