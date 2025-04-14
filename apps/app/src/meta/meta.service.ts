@@ -1,28 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { PostMetaReqDto } from './meta.dto';
-import { KafkaProducerService } from '@kafka/kafka-producer.service';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { KafkaConsumerService } from '@kafka/kafka-consumer.service';
 
 @Injectable()
-export class MetaService {
+export class MetaService implements OnModuleInit {
   private readonly TOPIC = 'meta';
   private readonly meta = [];
 
-  constructor(
-    private readonly kafkaProducerService: KafkaProducerService,
-    private readonly kafkaConsumerService: KafkaConsumerService,
-  ) {
-    this.#initMeta();
-  }
+  constructor(private readonly kafkaConsumerService: KafkaConsumerService) {}
 
-  #initMeta() {
-    // DB 대체
-    this.meta.push({
-      name: 'test',
-    });
-  }
+  async onModuleInit() {
+    // TODO 최초 조회
 
-  async addMeta(dto: PostMetaReqDto) {
     // 구독여부 확인 후 구독
     const isSubscribed = this.kafkaConsumerService.isSubscribed(this.TOPIC);
     if (!isSubscribed) {
@@ -35,12 +23,6 @@ export class MetaService {
         return true;
       });
     }
-
-    // 메시지 전송
-    await this.kafkaProducerService.sendMessage({
-      topic: this.TOPIC,
-      message: JSON.stringify(dto),
-    });
   }
 
   getMeta() {
