@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Producer } from 'kafkajs';
 import { KafkaConfigService } from './kafka.config.service';
-import { SendMessageReqDto } from '../../../apps/app/src/app.dts';
+import { SendMessageDto } from '@kafka/dto/send-message.dto';
 
 @Injectable()
 export class KafkaProducerService {
@@ -12,7 +12,7 @@ export class KafkaProducerService {
     this.producer.connect();
   }
 
-  async sendMessage(dto: SendMessageReqDto) {
+  async sendMessage(dto: SendMessageDto) {
     const { topic, message } = dto;
 
     try {
