@@ -21,5 +21,7 @@ $ docker-compose up -d
 ## Running the app
 
 ```bash
+$ nest build
+
 $ pm2 start ecosystem.config.js
 ```
