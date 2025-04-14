@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PostMetaReqDto } from './meta.dto';
-import { KafkaProducerService } from '../kafka/kafka-producer.service';
-import { KafkaConsumerService } from '../kafka/kafka-consumer.service';
+import { KafkaProducerService } from '@kafka/kafka-producer.service';
+import { KafkaConsumerService } from '@kafka/kafka-consumer.service';
 
 @Injectable()
 export class MetaService {

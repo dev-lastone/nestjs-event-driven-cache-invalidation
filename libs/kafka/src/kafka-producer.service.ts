@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Producer } from 'kafkajs';
 import { KafkaConfigService } from './kafka.config.service';
-import { SendMessageReqDto } from '../app.dts';
+import { SendMessageReqDto } from '../../../apps/app/src/app.dts';
 
 @Injectable()
 export class KafkaProducerService {
