@@ -8,9 +8,9 @@ export class KafkaConsumerService {
   private readonly consumer: Consumer;
 
   constructor(private kafkaConfigService: KafkaConfigService) {
-    this.consumer = this.kafkaConfigService
-      .getClient()
-      .consumer({ groupId: 'nestjs-kafka-group' });
+    const groupId = process.env.INSTANCE_ID || 'default-group';
+
+    this.consumer = this.kafkaConfigService.getClient().consumer({ groupId });
     this.consumer.connect();
   }
 
